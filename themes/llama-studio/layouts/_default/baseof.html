@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     
-    <meta content="{{ $page.Summary | default "¿?" }}" name="description">
+    <meta content="{{ $.Site.BaseURL }}humans.txt" name="author">
+    <meta content="{{ $page.Summary | default "" }}" name="description">
     
     <meta property="og:description" content="{{ $page.Summary | default "" }}" />
     <meta property="og:title" content="{{ $page.Title | default "Untitled" }}" />
@@ -24,11 +25,6 @@
     <link rel="apple-touch-icon" href="{{ $.Site.BaseURL }}apple-touch-icon-152x152.png" sizes="152x152">
     <link rel="apple-touch-icon" href="{{ $.Site.BaseURL }}apple-touch-icon-167x167.png" sizes="167x167">
     <link rel="apple-touch-icon" href="{{ $.Site.BaseURL }}apple-touch-icon-180x180.png" sizes="180x180">
-    
-    <!-- turbolinks -->
-    <script type="module">
-      addEventListener("load", () => import("https://cdn.skypack.dev/@hotwired/turbo?min"));
-    </script>
     
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
