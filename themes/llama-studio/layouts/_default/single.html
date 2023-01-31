@@ -1,0 +1,38 @@
+{{ define "main" }} 
+{{ $page := . }}
+<article aria-label="{{ $page.Title }}" class="post">
+  {{ if eq $page.Params.Category "Case Study" }}
+  <header class="post_head">
+    <div class="post_desc">
+      <h1 class="post_h1">
+        {{ $page.Summary }}
+      </h1>
+    </div>
+    <div class="post_tags">
+      <div class="deets deets-tags">
+        <ul class="deets_list">
+          {{ range $page.Params.Tags }}
+          <li class="deets_node">{{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+    </div>
+    <div class="post_misc">
+      <div class="deets deets-tags">
+        <ul class="deets_list">
+          {{ with $page.Site.Author.name }}
+          <li class="deets_node">{{ . }}</li>
+          {{end}}
+          
+          <li class="deets_node">{{ $page.Date.Format "January 2006" }}</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  {{ end }}
+  
+  <div class="post_body">
+    <div class="copy">{{ $page.Content }}</div>
+  </div>
+</article>
+{{ end }}

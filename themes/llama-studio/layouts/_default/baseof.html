@@ -1,0 +1,111 @@
+{{ $page := . }}
+
+<!DOCTYPE html>
+<html lang="{{ $.Site.LanguageCode | default "en" }}">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    
+    <meta content="{{ $page.Summary | default "¿?" }}" name="description">
+    
+    <meta property="og:description" content="{{ $page.Summary | default "" }}" />
+    <meta property="og:title" content="{{ $page.Title | default "Untitled" }}" />
+    <meta property="og:url" content="{{ $page.RelPermalink }}" />
+    
+    {{ with ($.Resources.GetMatch "opengraph*") }}
+    <meta property="og:image" content="{{ (.Fill "1200x630 Center jpg").RelPermalink }}" />
+    {{ end }}
+    
+    <!-- icons -->
+    <link rel="icon" href="{{ $.Site.BaseURL }}favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="{{ $.Site.BaseURL }}favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="{{ $.Site.BaseURL }}favicon-96x96.png" sizes="96x96" type="image/png">
+    <link rel="apple-touch-icon" href="{{ $.Site.BaseURL }}apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" href="{{ $.Site.BaseURL }}apple-touch-icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="{{ $.Site.BaseURL }}apple-touch-icon-167x167.png" sizes="167x167">
+    <link rel="apple-touch-icon" href="{{ $.Site.BaseURL }}apple-touch-icon-180x180.png" sizes="180x180">
+    
+    <!-- turbolinks -->
+    <script type="module">
+      addEventListener("load", () => import("https://cdn.skypack.dev/@hotwired/turbo?min"));
+    </script>
+    
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <!-- javascripts -->
+    {{ $javascripts := slice (resources.Get "javascripts/llama-studio.js") }}
+    
+    {{ with $.Site.Params.javaScripts }}
+    {{ range . }}
+      {{ $javascripts = $javascripts | append (slice (resources.Get .)) }}
+    {{ end }}
+    {{ end }}
+    {{ $javascript := $javascripts | resources.Concat "javascripts/llama-studio.js" | resources.Minify | fingerprint }}
+    <script integrity="{{ $javascript.Data.Integrity }}" src="{{ $javascript.RelPermalink }}" type="text/javascript"></script>
+    
+    <!-- stylesheets -->    
+    {{ $stylesheets := slice (resources.Get "stylesheets/llama-studio.scss") }}
+    
+    {{ with $.Site.Params.styleSheets }}
+    {{ range . }}
+      {{ $stylesheets = $stylesheets | append (slice (resources.Get .)) }}
+    {{ end }}
+    {{ end }}
+    {{ $stylesheet := $stylesheets | resources.Concat "stylesheets/llama-studio" | toCSS | resources.Minify | fingerprint }}
+    <link href="{{ $stylesheet.RelPermalink }}" integrity="{{ $stylesheet.Data.Integrity }}" rel="stylesheet" type="text/css" />
+    
+    <title>{{ $.Title | default "Untitled" }}&thinsp;&mdash;&thinsp;{{ $.Site.Title }}</title>
+  </head>
+  <body id="ue">
+    <div class="grid">
+      <header class="grid_header">
+        <div class="logo">
+          <a class="logo_anchor" href="/" tabindex="1">Llama Studio</a>
+        </div>
+        <nav aria-label="secondary" class="links">
+          <ul class="links_list">
+            <li class="links_node"> <a class="links_anchor hover" href="/" tabindex="6">En<span class="hide@mobile hide@fablet hide@tablet_portrait hide@tablet_landscape">glish</span></a></li>
+            <li class="links_node"><a class="links_anchor" href="/" tabindex="6">Es<span class="hide@mobile hide@fablet hide@tablet_portrait hide@tablet_landscape">pañol</span></a></li>
+          </ul>
+        </nav>
+      </header>
+      <main class="grid_body">
+        <div class="main">
+          {{ block "main" $page }}{{ end }}
+        </div>
+      </main>
+      <div class="grid_menu">
+        <nav aria-label="primary" class="links links-columns@mobile links-columns@fablet links-rows@tablet_portrait links-rows@tablet_landscape links-rows@laptop links-rows@cinema">
+          <ul class="links_list">
+            <li class="links_node"><a class="links_anchor" href="/about/" tabindex="2">Information</a></li>
+            <li class="links_node"><a class="links_anchor" href="mailto:hey@llama.studio?subject=Hey<20Llama<20Studio!" tabindex="3">Get in Touch</a></li>
+          </ul>
+          
+          <ul class="links_list">
+            <li class="links_node"><a class="links_anchor" href="https://www.linkedin.com/company/llama-studio-ltd/" tabindex="4">LinkedIn</a></li>
+            <li class="links_node"><a class="links_anchor" href="https://twitter.com/llamastudioltd/" tabindex="5">Twitter</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="grid_meta">
+        <div class="links links-columns@mobile links-columns@fablet links-rows@tablet_portrait links-rows@tablet_landscape links-rows@laptop links-rows@cinema">
+          <ul class="links_list">
+            <li class="links_node"><data rel="london" value="51°30'N 00°07'W">51°30'<span class="hide@tablet_portrait hide@tablet_landscape">26.359"</span>N 00°07"<span class="hide@tablet_portrait hide@tablet_landscape">39.530"</span>W</data></li>            
+            <li class="links_node"><data rel="valencia" value="39°28'N 00°22'E">39°28'<span class="hide@tablet_portrait hide@tablet_landscape">11.645"</span>N 00°22'<span class="hide@tablet_portrait hide@tablet_landscape">33.424"</span>E</data></li>
+          </ul>
+        </div>
+      </div>
+      <footer class="grid_footer">
+        <nav class="links links-columns@mobile links-columns@fablet">
+          <ul class="links_list">
+            <li class="links_node">&copy; Llama Studio Ltd., 2019</li>
+            <li class="links_node"><a class="links_anchor" href="#ue">Skip to Top</a></li>
+          </ul>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>

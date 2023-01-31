@@ -1,0 +1,85 @@
+{{ define "main" }}
+  <section aria-label="Introduction" class="lead">
+    <h1 class="lead_h1">
+      I'm Ben Sekulowicz-Barclay, a user experience&nbsp;designer. I&nbsp;help people turn their ideas into successful digital&nbsp;products.
+    </h1>
+  </section>
+  
+  <section aria-label="Recent Projects" class="card">
+    <header class="card_head">
+      <h1 class="card_h1">
+        Recent Projects
+      </h1>
+    </header>
+    <div class="card_body">
+      <div class="cells cells-1_up@mobile cells-2_up@fablet cells-2_up@tablet_portrait cells-2_up@tablet_landscape cells-3_up@laptop cells-3_up@cinema">
+        <ol class="cells_list">
+          {{ range (where (.Site.GetPage "/work").Pages "Params.Category" "in" (slice "Case Study")) }}
+          {{ $page := . }}
+          <li class="cells_node cell">
+            <div class="cell_head">
+              <h1 class="cell_h1">{{ $page.Summary }}</h1>
+            </div>
+            <div class="cell_meta">
+              <div class="deets deets-tags">
+                <ul class="deets_list">
+                  {{ range $page.Params.Tags }}
+                  <li class="deets_node">{{ . }}</li>
+                  {{ end }}
+                </ul>
+              </div>
+            </div>
+            <div class="cell_foot">
+              <div class="calls">
+                <ul class="calls_list">
+                  <li class="calls_node">
+                    <a class="calls_anchor" href="{{ $page.RelPermalink }}">View Case Study</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>                
+          {{ end }}
+        </ol>
+      </div>
+    </div>
+  </section>
+  
+  <section aria-label="Work History" class="card">
+    <header class="card_head">
+      <h1 class="card_h1">
+        Work History
+      </h1>
+    </header>
+    <div class="card_body">
+      <div class="lines">
+        <ol class="lines_list">
+          {{ range (.Site.GetPage "/work").Pages }}
+          {{ $page := . }}
+          <li class="lines_node line line-withCaseStudy">
+            <div class="line_head">
+              <h1 class="line_h1">{{ $page.Title }}</h1>
+            </div>
+            <div class="line_meta">
+              <h2 class="line_h2">{{ $page.Date.Format "2006" }}</h2>
+            </div>
+            <div class="line_foot">
+              {{ if eq $page.Params.Category "Case Study" }}
+              <div class="calls">
+                <ul class="calls_list">
+                  <li class="calls_node">
+                    <a class="calls_anchor" href="{{ $page.RelPermalink }}">
+                      <span class="calls_plus">View Case Study</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              {{ end }}
+            </div>
+          </li>
+          {{ end }}
+        </ol>
+      </div>
+    </div>
+  </section>
+{{ end }}

@@ -1,0 +1,293 @@
+@import "vendor/reset";
+@import "vendor/turbo";
+
+/*
+
+TOOLS
+
+*/
+
+$mobile:375;
+$fablet:667;
+$tablet_portrait:768;
+$tablet_landscape:1024;
+$laptop:1280;
+$cinema:1680;
+
+$beat:#{ (1 / 24) * 4 };
+
+@mixin hide_text {
+  text-align:left;
+  text-indent:-9999px;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+@mixin to_lower {
+  letter-spacing:0;
+  text-transform:none;
+  white-space:normal;
+}
+
+@mixin to_upper {
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+/*
+
+PALLETTE:
+
+Grey 1° #ebeae6;
+Grey 2° #f3f2f0;
+Grey 3° #f7f7f5;
+Grey 4° #fbfbfa;
+
+Blue 1° #b7e3e4;
+Blue 2° #d5eeee;
+Blue 3° #e3f4f4;
+Blue 4° #f1f9f9;
+
+Pink 1° #f03f35;
+Pink 2° #fc8f88;
+Pink 3° #ffb5b1;
+Pink 4° #ffdad8;
+*/
+
+$background_1:#fbfbfa;
+$background_2:#f3f2f0;
+$background_3:#ebeae6;
+$foreground_1:rgba(#000000, 0.80);
+$foreground_2:rgba(#000000, 0.24);
+$foreground_3:rgba(#000000, 0.08);
+$highlights_1:#f03f35;
+$highlights_2:#fc8f88;
+$highlights_2:#ffb5b1;
+
+/*
+
+TYPOGRAPHY:
+
+T: 2.25/3.50
+S: 2.50/4.00
+L: 3.00/4.50
+X: 3.50/5.00
+
+*/
+
+$font_stack:'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+
+// PRIMARY HEADING: COPY > H2
+
+@mixin primary_heading {
+  @include to_lower;
+
+  font-family:$font_stack;
+  font-weight:700;
+
+  @media (max-width:#{ $tablet_portrait - 1 }px) {
+    font-size:3rem;
+    line-height:4.5rem;
+  }
+
+  @media (min-width:#{ $tablet_portrait }px) {
+    font-size:3.5rem;
+    line-height:5rem;
+  }
+}
+
+// SECONDARY HEADING: COPY > H3
+
+@mixin secondary_heading {
+  @include to_lower;
+
+  font-family:$font_stack;
+  font-weight:700;
+
+  @media (max-width:#{ $tablet_portrait - 1 }px) {
+    font-size:2.25rem;
+    line-height:3.5rem;
+  }
+
+  @media (min-width:#{ $tablet_portrait }px) {
+    font-size:2.5rem;
+    line-height:4rem;
+  }
+}
+
+// PRIMARY TITLE: LEAD_H1 + POST_H1
+
+@mixin primary_title {
+  @include to_lower;
+
+  font-weight:700;
+  font-family:$font_stack;
+  line-height:1.333;
+
+  @media (max-width:#{ $fablet - 1 }px) {
+    font-size:calc(3.5vw + 2rem);
+  }
+
+  @media (min-width:#{ $fablet }px) and (max-width:#{ $tablet_portrait - 1 }px) {
+    font-size:calc(3.0vw + 2rem);
+  }
+
+  @media (min-width:#{ $tablet_portrait }px) and (max-width:#{ $tablet_landscape - 1 }px) {
+    font-size:calc(3.0vw + 2rem);
+  }
+
+  @media (min-width:#{ $tablet_landscape }px) and (max-width:#{ $laptop - 1 }px) {
+    font-size:calc(2.5vw + 2rem);
+  }
+
+  @media (min-width:#{ $laptop }px) and (max-width:#{ $cinema - 1 }px) {
+    font-size:calc(2.5vw + 2rem);
+  }
+
+  @media (min-width:#{ $cinema }px) {
+    font-size:calc(#{ ($cinema / 100) * 2 }px + 2rem);
+  }
+}
+
+// SECONDARY TITLE: CELL_H1
+
+@mixin secondary_title {
+  @include to_lower;
+
+  font-family:$font_stack;
+  font-weight:700;
+
+  @media (max-width:#{ $tablet_portrait - 1 }px) {
+    font-size:2.5rem;
+    line-height:4rem;
+  }
+
+  @media (min-width:#{ $tablet_portrait }px) {
+    font-size:3rem;
+    line-height:4.5rem;
+  }
+}
+
+// TERTIARY TITLE: CARD_H1
+
+@mixin tertiary_title {
+  @include to_lower;
+
+  font-family:$font_stack;
+  font-size:2.25rem;
+  font-weight:700;
+  line-height:4rem;
+}
+
+// PRIMARY SUBTITLE: LINKS_LIST
+
+@mixin primary_subtitle {
+  @include to_lower;
+
+  font-family:$font_stack;
+  font-size:2rem;
+  font-weight:700;
+  line-height:4rem;
+}
+
+// SECONDARY SUBTITLE: CALLS_LIST
+
+@mixin secondary_subtitle {
+  @include to_lower;
+
+  font-family:$font_stack;
+  font-size:2rem;
+  font-weight:500;
+  line-height:4rem;
+}
+
+// PRIMARY COPY: P, OL, UL
+
+@mixin primary_copy {
+  @include to_lower;
+
+  font-size:2.25rem;
+  font-family:$font_stack;
+  font-variant-numeric:tabular-nums;
+  font-weight:400;
+  line-height:4rem;
+}
+
+// SECONDARY COPY: DEETS, FIGCAPTION, LINE_H1, LINE_H2
+
+@mixin secondary_copy {
+  @include to_lower;
+
+  font-size:2rem;
+  font-family:$font_stack;
+  font-variant-numeric:tabular-nums;
+  font-weight:400;
+  line-height:3.5rem;
+}
+
+html {
+  font-size:8px;
+  font-smoothing:subpixel-antialiased;
+  text-size-adjust:none;
+}
+
+body {
+  background-color:$background_3;
+  color:$foreground_1;
+
+
+  &:after {
+    content:'';
+    background-image:url(../images/body-valencia.svg);
+    background-position:50% 50%;
+    background-repeat:no-repeat;
+    background-size:cover;
+
+    bottom:0;
+    left:0;
+    right:0;
+    top:0;
+    position:fixed;
+    z-index:-1;
+  }
+}
+
+a {
+  color:inherit;
+  text-decoration:none;
+}
+
+::selection {
+  background-color:$highlights_1;
+  color:$background_1;
+}
+
+
+@import 'copy';
+@import 'hide';
+
+@import 'blobs';
+@import 'calls';
+@import 'deets';
+@import 'links';
+
+@import 'cell';
+@import 'cells';
+@import 'line';
+@import 'lines';
+
+@import 'card';
+@import 'lead';
+@import 'logo';
+@import 'main';
+@import 'post';
+
+@import 'grid';
+
+/* ARGH! */
+
+.turbolinks-progress-bar {
+  background-color:$highlights_1;
+  height:1px;
+}
